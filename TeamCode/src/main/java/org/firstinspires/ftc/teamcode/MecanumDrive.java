@@ -49,32 +49,35 @@ import java.util.List;
 @Config
 public final class MecanumDrive {
     // drive model parameters
-    public static double IN_PER_TICK = 0;
-    public static double LATERAL_IN_PER_TICK = 1;
-    public static double TRACK_WIDTH_TICKS = 0;
+    public static double WHEEL_DIAMETER = 1.38; // in
+    public static double GEAR_RATIO = 1; // output (wheel) speed / input (motor) spe
+    public static final double TICKS_PER_REV =8192;
+    public static double IN_PER_TICK = WHEEL_DIAMETER * Math.PI * GEAR_RATIO * 1 / TICKS_PER_REV;
+    public static double LATERAL_IN_PER_TICK = WHEEL_DIAMETER * Math.PI * GEAR_RATIO * 1 / TICKS_PER_REV;
+    public static double TRACK_WIDTH_TICKS = 16.974255869415003 * IN_PER_TICK;
 
     // feedforward parameters
-    public static double kS = 0;
-    public static double kV = 0;
-    public static double kA = 0;
+    public static double kV = 0.58;
+    public static double kS = 0.69;
+    public static double kA = 0.01;
 
     // path profile parameters
-    public static double MAX_WHEEL_VEL = 50;
-    public static double MIN_PROFILE_ACCEL = -30;
-    public static double MAX_PROFILE_ACCEL = 50;
+    public static double MAX_WHEEL_VEL = 20;
+    public static double MIN_PROFILE_ACCEL = -10;
+    public static double MAX_PROFILE_ACCEL = 10;
 
     // turn profile parameters
-    public static double MAX_ANG_VEL = Math.PI; // shared with path
-    public static double MAX_ANG_ACCEL = Math.PI;
+    public static double MAX_ANG_VEL = 2.453618107535666; //Math.PI; // shared with path
+    public static double MAX_ANG_ACCEL = Math.toRadians(96.52730769230769);//Math.PI;
 
     // path controller gains
-    public static double AXIAL_GAIN = 0.0;
-    public static double LATERAL_GAIN = 0.0;
-    public static double HEADING_GAIN = 0.0; // shared with turn
+    public static double AXIAL_GAIN = 12;
+    public static double LATERAL_GAIN = 8;
+    public static double HEADING_GAIN = 11.5; // shared with turn
 
-    public static double AXIAL_VEL_GAIN = 0.0;
-    public static double LATERAL_VEL_GAIN = 0.0;
-    public static double HEADING_VEL_GAIN = 0.0; // shared with turn
+    public static double AXIAL_VEL_GAIN = 0.2;
+    public static double LATERAL_VEL_GAIN = 0.2;
+    public static double HEADING_VEL_GAIN = 0.15; // shared with turn
 
     public final MecanumKinematics kinematics = new MecanumKinematics(
             IN_PER_TICK * TRACK_WIDTH_TICKS,
@@ -104,6 +107,8 @@ public final class MecanumDrive {
     public final double inPerTick = IN_PER_TICK;
 
     private final LinkedList<Pose2d> poseHistory = new LinkedList<>();
+
+
 
     public class DriveLocalizer implements Localizer {
         public final Encoder leftFront, leftRear, rightRear, rightFront;
@@ -183,6 +188,9 @@ public final class MecanumDrive {
         rightBack = hardwareMap.get(DcMotorEx.class, "rightBack");
         rightFront = hardwareMap.get(DcMotorEx.class, "rightFront");
 
+        rightBack.setDirection(DcMotorEx.Direction.REVERSE);
+        rightFront.setDirection(DcMotorEx.Direction.REVERSE);
+
         leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         leftBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -196,7 +204,8 @@ public final class MecanumDrive {
 
         voltageSensor = hardwareMap.voltageSensor.iterator().next();
 
-        localizer = new DriveLocalizer();
+//        localizer = new DriveLocalizer();
+        localizer = new ThreeDeadWheelLocalizer(hardwareMap, IN_PER_TICK);
     }
 
     public void setDrivePowers(Twist2d powers) {

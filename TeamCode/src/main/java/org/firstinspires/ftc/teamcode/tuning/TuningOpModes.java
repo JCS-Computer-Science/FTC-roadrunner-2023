@@ -27,12 +27,14 @@ public final class TuningOpModes {
         List<Class<? extends OpMode>> opModes = Arrays.asList(
                 AngularRampLogger.class,
                 ForwardPushTest.class,
+                ForwardPushTestVISION.class,
                 ForwardRampLogger.class,
                 LateralPushTest.class,
                 ManualFeedbackTuner.class,
                 ManualFeedforwardTuner.class,
                 SplineTest.class,
-                MecanumMotorDirectionDebugger.class
+                MecanumMotorDirectionDebugger.class,
+                ManualHeadingTuner.class
         );
 
         for (Class<? extends OpMode> o : opModes) {
