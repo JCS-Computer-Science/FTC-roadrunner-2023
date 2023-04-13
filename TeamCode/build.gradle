@@ -16,6 +16,15 @@ apply from: '../build.common.gradle'
 apply from: '../build.dependencies.gradle'
 
 android {
+
+    buildTypes {
+        release {
+            multiDexEnabled true
+        }
+        debug {
+            multiDexEnabled true
+        }
+    }
     namespace = 'org.firstinspires.ftc.teamcode'
     androidResources {
         noCompress 'tflite'
