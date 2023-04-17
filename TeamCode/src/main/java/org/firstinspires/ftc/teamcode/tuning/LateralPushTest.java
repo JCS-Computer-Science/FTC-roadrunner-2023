@@ -23,7 +23,7 @@ public final class LateralPushTest extends LinearOpMode {
 
         MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(0, 0, 0));
 
-        MecanumDrive.DriveLocalizer dl = (MecanumDrive.DriveLocalizer) drive.localizer;
+        //MecanumDrive.DriveLocalizer dl = (MecanumDrive.DriveLocalizer) drive.localizer;
 
         drive.leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         drive.leftBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
@@ -32,9 +32,9 @@ public final class LateralPushTest extends LinearOpMode {
 
         waitForStart();
 
-        double initLateralSum = lateralSum(dl);
+        //double initLateralSum = lateralSum(dl);
         while (opModeIsActive()) {
-            telemetry.addData("ticks traveled", lateralSum(dl) - initLateralSum);
+           // telemetry.addData("ticks traveled", lateralSum(dl) - initLateralSum);
             telemetry.update();
         }
     }
