@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmodes;
 
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 
@@ -10,6 +11,8 @@ public final class Testing extends LinearOpMode {
 
     private static Solenoid solenoid0;
     private static Solenoid solenoid1;
+
+//    private TelemetryPacket packet = new TelemetryPacket();
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -25,9 +28,10 @@ public final class Testing extends LinearOpMode {
                 active(false);
             }
 
-            telemetry.addData("Solenoid 1", solenoid0.getState());
-            telemetry.addData("Solenoid 2", solenoid1.getState());
-            telemetry.update();
+
+//            packet.put("Solenoid 1", solenoid0.getState());
+//            packet.put("Solenoid 2", solenoid1.getState());
+//            telemetry.update();
         }
     }
 
