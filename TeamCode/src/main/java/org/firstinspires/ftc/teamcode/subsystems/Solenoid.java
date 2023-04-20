@@ -1,18 +1,16 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
-import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 
 public class Solenoid {
-    private DigitalChannel solenoid;
+    private static DigitalChannel solenoid;
 
-    public Solenoid(DigitalChannel s) {
-        this.solenoid =  s;
+    public Solenoid(DigitalChannel solenoid) {
+        this.solenoid = solenoid;
 
         solenoid.setMode(DigitalChannel.Mode.OUTPUT);
 
         solenoid.setState(false);
-
     }
 
     /**
