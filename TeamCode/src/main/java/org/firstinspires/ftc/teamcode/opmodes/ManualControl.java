@@ -61,6 +61,8 @@ public class ManualControl extends LinearOpMode {
 
             launcher.setState(gamepad1.a);
 
+            intake.setPower(smooth(gamepad1.right_trigger) - smooth(gamepad1.left_trigger));
+
             telemetry.update();
         }
     }

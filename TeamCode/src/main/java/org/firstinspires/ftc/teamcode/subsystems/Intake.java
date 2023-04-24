@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class Intake {
-    // use two motors for intake, treat them as one but one of them should be reversed
     private DcMotorEx intakeMotor0;
     private DcMotorEx intakeMotor1;
 
@@ -12,7 +11,10 @@ public class Intake {
         this.intakeMotor0 = hardwareMap.get(DcMotorEx.class, "intakeMotor0");
         this.intakeMotor1 = hardwareMap.get(DcMotorEx.class, "intakeMotor1");
 
-        this.intakeMotor0.setDirection(DcMotorEx.Direction.REVERSE);
+        this.intakeMotor1.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        this.intakeMotor0.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+
+        this.intakeMotor1.setDirection(DcMotorEx.Direction.REVERSE);
     }
 
     /**
@@ -22,6 +24,5 @@ public class Intake {
     public void setPower(double power) {
         intakeMotor0.setPower(power);
         intakeMotor1.setPower(power);
-
     }
 }
