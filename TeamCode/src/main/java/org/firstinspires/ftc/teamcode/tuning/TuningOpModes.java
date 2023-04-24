@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.eventloop.opmode.OpModeRegistrar;
 
 import org.firstinspires.ftc.robotcore.internal.opmode.OpModeMeta;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
-import org.firstinspires.ftc.teamcode.opmodes.Testing;
 
 import java.util.Arrays;
 import java.util.List;
@@ -35,8 +34,7 @@ public final class TuningOpModes {
                 ManualFeedforwardTuner.class,
                 SplineTest.class,
                 MecanumMotorDirectionDebugger.class,
-                ManualHeadingTuner.class,
-                Testing.class
+                ManualHeadingTuner.class
         );
 
         for (Class<? extends OpMode> o : opModes) {
