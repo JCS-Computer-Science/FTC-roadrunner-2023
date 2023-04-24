@@ -51,12 +51,12 @@ public class ManualControl extends LinearOpMode {
             telemetry.addData("Right Stick Y", gamepad1.right_stick_y);
 
             drive.setDrivePowers(
-                    new Twist2d(
-                            new Vector2d(
-                                    -smooth(gamepad1.left_stick_y)*MOTOR_POWER,
-                                    -smooth(gamepad1.left_stick_x)*MOTOR_POWER
-                            ), -smooth(gamepad1.right_stick_x)*MOTOR_POWER
-                    )
+                new Twist2d(
+                    new Vector2d(
+                            -smooth(gamepad1.left_stick_y)*MOTOR_POWER,
+                            -smooth(gamepad1.left_stick_x)*MOTOR_POWER
+                    ), -smooth(gamepad1.right_stick_x)*MOTOR_POWER
+                )
             );
 
             launcher.setState(gamepad1.a);
