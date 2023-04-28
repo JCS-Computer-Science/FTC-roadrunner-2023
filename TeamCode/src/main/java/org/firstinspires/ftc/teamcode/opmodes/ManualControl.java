@@ -23,6 +23,7 @@ import org.firstinspires.ftc.teamcode.subsystems.Launcher;
 public class ManualControl extends ActionOpMode {
 
 	public static double MOTOR_POWER = 0.9;
+	public static double SHOOTER_DELAY = 0.3;
 	private static Intake intake;
 	private static Launcher launcher;
 	private boolean launcherState = false;
@@ -60,26 +61,28 @@ public class ManualControl extends ActionOpMode {
 							), -smooth(gamepad1.right_stick_x) * MOTOR_POWER
 					)
 			);
-			if (!launcherState && gamepad1.a) {
+			if (!launcherState && (gamepad1.a||gamepad2.a)) {
 				runBlocking(
 						new SequentialAction(
 								drive.stop(),
 								intake.stop(),
 								launcher.setIndexer(true),
-								new SleepAction(0.5),
-								launcher.setIndexer(false),
+								new SleepAction(SHOOTER_DELAY),
 								launcher.setShooter(true),
+
 								new SleepAction(0.5),
+
+								launcher.setIndexer(false),
 								launcher.setShooter(false)
 						)
 				);
 			}
 
-			launcherState = gamepad1.a;
+			launcherState = gamepad1.a||gamepad2.a;
 
-			launcher.setState(gamepad1.x, gamepad1.y);
+			launcher.setState(gamepad1.x|| gamepad2.x, gamepad1.y||gamepad2.y);
 
-			intake.setPower(-gamepad1.right_trigger);
+			intake.setPower(-gamepad1.right_trigger-gamepad2.right_trigger);
 
 			telemetry.update();
 		}

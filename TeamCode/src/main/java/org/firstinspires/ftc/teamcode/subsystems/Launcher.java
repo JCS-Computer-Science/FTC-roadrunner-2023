@@ -23,7 +23,7 @@ public class Launcher {
         solenoid0.setState(fireState);
         solenoid1.setState(fireState);
 
-        servo.setPosition(loadState ? 0.5 : 0);
+        servo.setPosition(loadState ? 0.09 : 0);
     }
 
     public Action setShooter(boolean state) {
@@ -48,7 +48,7 @@ public class Launcher {
         return new Action() {
             @Override
             public boolean run(TelemetryPacket telemetryPacket) {
-                servo.setPosition(state ? 0.25 : -0.25);
+                servo.setPosition(state ? 0.09 : 0);
                 return false;
             }
 
