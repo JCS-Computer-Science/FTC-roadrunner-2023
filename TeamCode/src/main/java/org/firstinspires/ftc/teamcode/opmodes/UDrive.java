@@ -6,8 +6,8 @@ import org.firstinspires.ftc.teamcode.ActionOpMode;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-@Autonomous(name="Square drive", group="Autonomous")
-public class Auto extends ActionOpMode {
+@Autonomous(name="U Drive", group="Autonomous")
+public class UDrive extends ActionOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {

@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.acmerobotics.dashboard.canvas.Canvas;
+import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -47,7 +48,7 @@ public class Launcher {
         return new Action() {
             @Override
             public boolean run(TelemetryPacket telemetryPacket) {
-                servo.setPosition(state ? 0.5 : 0);
+                servo.setPosition(state ? 0.25 : -0.25);
                 return false;
             }
 

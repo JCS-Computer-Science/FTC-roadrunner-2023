@@ -16,9 +16,9 @@ import org.firstinspires.ftc.teamcode.util.RawEncoder;
 
 @Config
 public final class ThreeDeadWheelLocalizer implements Localizer {
-    public static double PAR1_Y_TICKS = 13975.455445052334;
-    public static double PAR0_Y_TICKS = -14372.928257869093;
-    public static double PERP_X_TICKS = -13798.589047502446;
+    public static double PAR1_Y_TICKS = 13787.945022219063;
+    public static double PAR0_Y_TICKS = -14524.66095320209;
+    public static double PERP_X_TICKS = -13702.936821924744;
 
     public final Encoder par0, par1, perp;
 
@@ -40,9 +40,12 @@ public final class ThreeDeadWheelLocalizer implements Localizer {
         lastPar1Pos = par1.getPositionAndVelocity().position;
         lastPerpPos = perp.getPositionAndVelocity().position;
 
+
         this.inPerTick = inPerTick;
 
     }
+
+
 
     public Twist2dIncrDual<Time> updateAndGetIncr() {
         Encoder.PositionVelocityPair par0PosVel = par0.getPositionAndVelocity();

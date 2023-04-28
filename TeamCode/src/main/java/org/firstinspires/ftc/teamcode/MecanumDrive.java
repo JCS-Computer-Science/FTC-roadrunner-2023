@@ -54,30 +54,30 @@ public final class MecanumDrive {
     public static final double TICKS_PER_REV =8192;
     public static double IN_PER_TICK = WHEEL_DIAMETER * Math.PI * GEAR_RATIO * 1 / TICKS_PER_REV;
     public static double LATERAL_IN_PER_TICK = WHEEL_DIAMETER * Math.PI * GEAR_RATIO * 1 / TICKS_PER_REV;
-    public static double TRACK_WIDTH_TICKS = 16.974255869415003 * IN_PER_TICK;
+    public static double TRACK_WIDTH_TICKS = 16.8;
 
     // feedforward parameters
-    public static double kV = 0.58;
-    public static double kS = 0.69;
-    public static double kA = 0.01;
+    public static double kA = 0.08;
+    public static double kV = 0.5952167687488528;
+    public static double kS = 0.0002984089938615433;
 
     // path profile parameters
-    public static double MAX_WHEEL_VEL = 20;
-    public static double MIN_PROFILE_ACCEL = -10;
-    public static double MAX_PROFILE_ACCEL = 10;
+    public static double MAX_WHEEL_VEL = 5;
+    public static double MIN_PROFILE_ACCEL = -5;
+    public static double MAX_PROFILE_ACCEL = 5;
 
     // turn profile parameters
-    public static double MAX_ANG_VEL = 2.453618107535666; //Math.PI; // shared with path
-    public static double MAX_ANG_ACCEL = Math.toRadians(96.52730769230769);//Math.PI;
+    public static double MAX_ANG_VEL = 1.5; //2.453618107535666; //Math.PI; // shared with path
+    public static double MAX_ANG_ACCEL = 1; //Math.toRadians(96.52730769230769);//Math.PI;
 
     // path controller gains
-    public static double AXIAL_GAIN = 12;
-    public static double LATERAL_GAIN = 8;
-    public static double HEADING_GAIN = 11.5; // shared with turn
+    public static double AXIAL_GAIN = 1;
+    public static double LATERAL_GAIN = 1;
+    public static double HEADING_GAIN = 1; // shared with turn
 
-    public static double AXIAL_VEL_GAIN = 0.2;
-    public static double LATERAL_VEL_GAIN = 0.2;
-    public static double HEADING_VEL_GAIN = 0.15; // shared with turn
+    public static double AXIAL_VEL_GAIN = 0.1;
+    public static double LATERAL_VEL_GAIN = 0.1;
+    public static double HEADING_VEL_GAIN = 0.1; // shared with turn
 
     public final MecanumKinematics kinematics = new MecanumKinematics(
             IN_PER_TICK * TRACK_WIDTH_TICKS,
@@ -198,14 +198,29 @@ public final class MecanumDrive {
 
         imu = hardwareMap.get(IMU.class, "imu");
         IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
-                RevHubOrientationOnRobot.LogoFacingDirection.UP,
-                RevHubOrientationOnRobot.UsbFacingDirection.FORWARD));
+                RevHubOrientationOnRobot.LogoFacingDirection.LEFT,
+                RevHubOrientationOnRobot.UsbFacingDirection.UP));
         imu.initialize(parameters);
 
         voltageSensor = hardwareMap.voltageSensor.iterator().next();
 
 //        localizer = new DriveLocalizer();
         localizer = new ThreeDeadWheelLocalizer(hardwareMap, IN_PER_TICK);
+    }
+
+    public Action stop() {
+        return new Action() {
+            @Override
+            public boolean run(TelemetryPacket telemetryPacket) {
+                setDrivePowers(new Twist2d(new Vector2d(0, 0), 0));
+                return false;
+            }
+
+            @Override
+            public void preview(Canvas canvas) {
+
+            }
+        };
     }
 
     public void setDrivePowers(Twist2d powers) {
