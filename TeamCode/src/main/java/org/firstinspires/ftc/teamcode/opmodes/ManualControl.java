@@ -24,6 +24,9 @@ public class ManualControl extends ActionOpMode {
 
 	public static double MOTOR_POWER = 0.9;
 	public static double SHOOTER_DELAY = 0.3;
+
+	public boolean REVERSE = false;
+	public boolean reversePressed = false;
 	private static Intake intake;
 	private static Launcher launcher;
 	private boolean launcherState = false;
@@ -56,8 +59,8 @@ public class ManualControl extends ActionOpMode {
 			drive.setDrivePowers(
 					new Twist2d(
 							new Vector2d(
-									-smooth(gamepad1.left_stick_y) * MOTOR_POWER,
-									-smooth(gamepad1.left_stick_x) * MOTOR_POWER
+									-smooth(gamepad1.left_stick_y) * MOTOR_POWER * (REVERSE ? -1 : 1),
+									-smooth(gamepad1.left_stick_x) * MOTOR_POWER * (REVERSE ? -1 : 1)
 							), -smooth(gamepad1.right_stick_x) * MOTOR_POWER
 					)
 			);
@@ -77,6 +80,11 @@ public class ManualControl extends ActionOpMode {
 						)
 				);
 			}
+
+			if(!reversePressed&&gamepad1.b){
+				REVERSE = !REVERSE;
+			}
+			reversePressed = gamepad1.b;
 
 			launcherState = gamepad1.a||gamepad2.a;
 
