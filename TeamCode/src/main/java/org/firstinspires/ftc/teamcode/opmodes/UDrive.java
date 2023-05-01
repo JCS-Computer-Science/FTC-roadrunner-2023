@@ -17,10 +17,10 @@ public class UDrive extends ActionOpMode {
         runBlocking(
             drive.actionBuilder(drive.pose)
                     .splineTo(new Vector2d(32,0),0)
-                    .setTangent(-Math.PI/2)
-                    .splineToConstantHeading(new Vector2d(32,32),-Math.PI)
+                    .setTangent(Math.PI/2)
+                    .splineToConstantHeading(new Vector2d(32,32),0)
                     .setTangent(-Math.PI)
-                    .splineToConstantHeading(new Vector2d(0,32),-Math.PI)
+                    .splineToConstantHeading(new Vector2d(0,32),0)
                     .build()
         );
     }
